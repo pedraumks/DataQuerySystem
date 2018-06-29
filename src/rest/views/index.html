@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="./public/bootstrap.min.css">
+  <link rel="stylesheet" href="./public/main.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var max_fields      = 5; //maximum input boxes allowed
+            var add_courses_fields_wrapper         = $("#main_course_where_wrapper"); //Fields wrapper
+            var add_courses_apply_fields_wrapper = $("#main_course_apply_wrapper");
+            var add_rooms_fields_wrapper         = $("#main_room_where_wrapper"); //Fields wrapper
+            var building_wrapper = $("#building_wrapper");
+            var course_wrapper  = $("#course_wrapper");
+            var add_courses_fields_button      = $(".add_courses_field_button"); //Add button ID
+            var add_courses_apply_fields_button      = $(".add_courses_apply_field_button");
+            var add_rooms_fields_button      = $(".add_rooms_field_button"); //Add button ID
+            var building_button = $("#add_new_building");
+            var course_button = $("#add_new_course");
+            var schedule_building_count = 0;
+            var schedule_course_count = 0;
+
+            var x = 1; //initial text box count
+            $(add_courses_fields_button).click(function(e){ //on add input button click
+                e.preventDefault();
+                if(x < max_fields){ //max input box allowed
+                    x++; //text box increment
+                    $(add_courses_fields_wrapper).append('<div class = "input_courses_fields_wrap"><label for="c-property">Select a property</label><select class="c-property"><option selected="selected"></option><option>Section Size</option><option>Department</option><option>Course Number</option><option>Instructor</option><option>Title</option></select><label for="c-operator">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select an operator</label><select class="c-operator"><option selected="selected"></option><option>Is</option><option>Greater than (value must be numeric)</option><option>Less than (value must be numeric)</option><option>Equal to (value must be numeric)</option></select><label for="c-value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter value</label><textarea class="c-value" rows="1" cols="30" id="c-value"></textarea><a href="#" class="remove_field">Remove</a></div>'); //add input box
+                }
+            });
+
+            var a = 1; //initial text box count
+            $(add_courses_apply_fields_button).click(function(e){ //on add input button click
+                e.preventDefault();
+                if(a < max_fields){ //max input box allowed
+                    a++; //text box increment
+                    $(add_courses_apply_fields_wrapper).append('<div class = "courses_apply_fields_wrap"><label for="c-apply">Select how you want to calculate results:</label><select class="c-apply"><option selected="selected"></option><option>Maximum</option><option>Minimum</option><option>Average</option><option>Count Number Of</option></select><br><label for="c-keys">Select which key you want to calculate the result for:</label><select class="c-keys"><option selected="selected"></option><option>Students Passed</option><option>Students Failed</option><option>Average Of Course Offering</option><option>Section of Course</option></select><br><label for="c-name">Enter a name for your result calculation:</label><textarea class="c-name" rows="1" cols="30" id="c-name"></textarea><label for="applySortCheckbox">&nbsp;&nbsp;&nbsp;Sort by this name</label><input type="checkbox" class="applySortCheckbox"><br><a href="#" class="remove_field">Remove</a><br><br><br></div>');
+                }
+            });
+
+            var y = 1; //initial text box count
+            $(add_rooms_fields_button).click(function(e){ //on add input button click
+                e.preventDefault();
+                if(y < max_fields){ //max input box allowed
+                    y++; //text box increment
+                    $(add_rooms_fields_wrapper).append('<div class="input_rooms_fields_wrap"><label for="r-property">Select a property</label><select class="r-property"><option selected="selected"></option><option>Building Name</option><option>Room Number</option><option>Room Size</option><option>Room Type</option><option>Furniture Type</option></select><label for="r-operator">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select an operator</label><select class="r-operator"><option selected="selected"></option><option>Is</option><option>Greater than (value must be numeric)</option><option>Less than (value must be numeric)</option><option>Equal to (value must be numeric)</option></select><label for="r-value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter value</label><textarea class="r-value" rows="1" cols="30" id="r-value"></textarea><a href="#" class="remove_field">Remove</a></div>');
+                }
+            });
+
+            $(building_button).click(function(e){ //on add input button click
+                e.preventDefault();
+                schedule_building_count++;
+                $(building_wrapper).append('<div><textarea class="building_code" rows="1" cols="15" id="value"></textarea><a href="#" class="remove_field">Remove</a></div>');
+            });
+
+            $(course_button).click(function(e){ //on add input button click
+                e.preventDefault();
+                schedule_course_count++;
+                var id = "course_" + schedule_course_count;
+                $(course_wrapper).append('<div class="course" id="' + id + '"></div>');
+                $('#' + id).append('<div><label>Department: </label><textarea class="course_dept" rows="1" cols="15" id="value"></textarea></div>');
+                $('#' + id).append('<div><label>Course ID: </label><textarea class="course_id" rows="1" cols="15" id="value"></textarea></div>');
+                $('#' + id).append('<a href="#" class="remove_field">Remove</a>');
+            });
+
+            $(add_courses_fields_wrapper).on("click",".remove_field", function(e){ //user click on remove text
+                e.preventDefault(); $(this).parent('div').remove(); x--;
+            });
+
+            $(add_courses_apply_fields_wrapper).on("click",".remove_field", function(e){ //user click on remove text
+                e.preventDefault(); $(this).parent('div').remove(); a--;
+            });
+
+            $(add_rooms_fields_wrapper).on("click",".remove_field", function(e){ //user click on remove text
+                e.preventDefault(); $(this).parent('div').remove(); y--;
+            });
+
+            $(building_wrapper).on("click",".remove_field", function(e){ //user click on remove text
+                e.preventDefault(); $(this).parent('div').remove(); x--;
+            });
+
+            $(course_wrapper).on("click",".remove_field", function(e){ //user click on remove text
+                e.preventDefault(); $(this).parent('div').remove(); x--;
+            })
+        });
+    </script>
+    <script src="./public/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="./public/bootstrap.min.js"></script>
+  <script src="./public/d3.min.js"></script>
+  <script src="./public/main.js"></script>
+	<script>
+        $( function() {
+            $( "#tabs" ).tabs();
+            $( "#property" ).selectmenu();
+            $( "#operator" ).selectmenu();
+            $( "input" ).checkboxradio();
+        } );
+	</script>
+</head>
+<html>
+  <body>
+    <div id="tabs">
+        <form id="mainForm">
+        <h1>InsightUBC</h1>
+        <ul>
+            <li><a href="#tabs-1">Courses</a></li>
+            <li><a href="#tabs-2">Rooms</a></li>
+            <li><a href="#tabs-3">Scheduling</a></li>
+        </ul>
+        <div id="tabs-1">
+            <fieldset>
+                <h3>Which properties would you like to get info for? </h3>
+                <label for="c-checkbox-1">Section Size</label>
+                <input type="checkbox" name="checkbox-1" id="c-checkbox-1">
+                <label for="c-checkbox-2">Department</label>
+                <input type="checkbox" name="checkbox-2" id="c-checkbox-2">
+                <label for="c-checkbox-3">Course Number</label>
+                <input type="checkbox" name="checkbox-3" id="c-checkbox-3">
+                <label for="c-checkbox-4">Instructor</label>
+                <input type="checkbox" name="checkbox-4" id="c-checkbox-4">
+                <label for="c-checkbox-5">Title</label>
+                <input type="checkbox" name="checkbox-5" id="c-checkbox-5">
+            </fieldset>
+            <br>
+            <br>
+            <fieldset>
+            <h3>Filter</h3>
+                <div id="main_course_where_wrapper">
+                <div class="input_courses_fields_wrap">
+                    <button class="add_courses_field_button">Add More Fields</button><br>
+                    <label>Select a property</label>
+                    <select name="c-property" class="c-property">
+                        <option selected="selected"></option>
+                        <option>Section Size</option>
+                        <option>Department</option>
+                        <option>Course Number</option>
+                        <option>Instructor</option>
+                        <option>Title</option>
+                    </select>
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select an operator</label>
+                    <select name="c-operator" class="c-operator">
+                        <option selected="selected"></option>
+                        <option>Is</option>
+                        <option>Greater than (value must be numeric)</option>
+                        <option>Less than (value must be numeric)</option>
+                        <option>Equal to (value must be numeric)</option>
+                    </select>
+                    <label for="c-value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter value</label>
+                    <textarea class="c-value" rows="1" cols="30" id="c-value"></textarea>
+                </div>
+                </div>
+            </fieldset>
+            <br>
+            <br>
+            <fieldset>
+                <h3>Aggregate Results</h3>
+                    <div id="main_course_apply_wrapper">
+                    <div class="courses_apply_fields_wrap">
+                        <button class="add_courses_apply_field_button">Add More Fields for Aggregation</button><br>
+                <label>Select how you want to calculate results:</label>
+                <select name="c-apply" class="c-apply">
+                    <option selected="selected"></option>
+                    <option>Maximum</option>
+                    <option>Minimum</option>
+                    <option>Average</option>
+                    <option>Count Number Of</option>
+                </select>
+                <br>
+                <label>Select which key you want to calculate the result for:</label>
+                <select name="c-keys" class="c-keys">
+                    <option selected="selected"></option>
+                    <option>Students Passed</option>
+                    <option>Students Failed</option>
+                    <option>Average Of Course Offering</option>
+                    <option>Section of Course</option>
+                </select>
+                <br>
+                <label for="c-name">Enter a name for your result calculation:</label>
+                <textarea class="c-name" rows="1" cols="30" id="c-name"></textarea>
+                <label>Sort by this name</label>
+                <input type="checkbox" class="applySortCheckbox"><br><br><br>
+                    </div>
+                    </div>
+            </fieldset>
+            <br>
+            <br>
+            <fieldset>
+                <h3>How would you like to sort the information?</h3>
+                <label for="c-direction">Direction of sort</label>
+                <select name="c-direction" id="c-direction">
+                    <option selected="selected">UP</option>
+                    <option>DOWN</option>
+                </select>
+                <br>
+                <label for="c-sort1">Sort first by:</label>
+                <select name="c-sort1" id="c-sort1">
+                    <option selected="selected"></option>
+                    <option>Section Size</option>
+                    <option>Department</option>
+                    <option>Course Number</option>
+                    <option>Instructor</option>
+                    <option>Title</option>
+                </select>
+                <label for="c-sort2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort second by:</label>
+                <select name="c-sort2" id="c-sort2">
+                    <option selected="selected"></option>
+                    <option>Section Size</option>
+                    <option>Department</option>
+                    <option>Course Number</option>
+                    <option>Instructor</option>
+                    <option>Title</option>
+                </select>
+                <label for="c-sort3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort third by:</label>
+                <select name="c-sort3" id="c-sort3">
+                    <option selected="selected"></option>
+                    <option>Section Size</option>
+                    <option>Department</option>
+                    <option>Course Number</option>
+                    <option>Instructor</option>
+                    <option>Title</option>
+                </select>
+                <label for="c-sort4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort fourth by:</label>
+                <select name="c-sort4" id="c-sort4">
+                    <option selected="selected"></option>
+                    <option>Section Size</option>
+                    <option>Department</option>
+                    <option>Course Number</option>
+                    <option>Instructor</option>
+                    <option>Title</option>
+                </select>
+                <label for="c-sort5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort fifth by:</label>
+                <select name="c-sort5" id="c-sort5">
+                    <option selected="selected"></option>
+                    <option>Section Size</option>
+                    <option>Department</option>
+                    <option>Course Number</option>
+                    <option>Instructor</option>
+                    <option>Title</option>
+                </select>
+            </fieldset>
+            <button type="submit" class="btn btn-courses">Submit</button>
+        </div>
+        <div id="tabs-2">
+            <fieldset>
+                <h3>Which properties would you like to get info for? </h3>
+                <label for="r-checkbox-1">Building Name</label>
+                <input type="checkbox" name="checkbox-1" id="r-checkbox-1">
+                <label for="r-checkbox-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Room Number</label>
+                <input type="checkbox" name="checkbox-2" id="r-checkbox-2">
+                <label for="r-checkbox-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rooms Size</label>
+                <input type="checkbox" name="checkbox-3" id="r-checkbox-3">
+                <label for="r-checkbox-4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Room Type</label>
+                <input type="checkbox" name="checkbox-4" id="r-checkbox-4">
+                <label for="r-checkbox-5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Furniture Type</label>
+                <input type="checkbox" name="checkbox-5" id="r-checkbox-5">
+            </fieldset>
+            <br>
+            <br>
+            <fieldset>
+                <h3>Filter</h3>
+                <div id="main_room_where_wrapper">
+                <div class="input_rooms_fields_wrap">
+                    <button class="add_rooms_field_button">Add More Fields</button><br>
+                    <label>Select a property</label>
+                    <select name="r-property" class="r-property">
+                        <option selected="selected"></option>
+                        <option>Building Name</option>
+                        <option>Room Number</option>
+                        <option>Room Size</option>
+                        <option>Room Type</option>
+                        <option>Furniture Type</option>
+                    </select>
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select an operator</label>
+                    <select name="r-operator" class="r-operator">
+                        <option selected="selected"></option>
+                        <option>Is</option>
+                        <option>Greater than (value must be numeric)</option>
+                        <option>Less than (value must be numeric)</option>
+                        <option>Equal to (value must be numeric)</option>
+                    </select>
+                    <label for="r-value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter value</label>
+                    <textarea class="r-value" rows="1" cols="30" id="r-value"></textarea>
+                </div>
+                </div>
+            </fieldset>
+            <br>
+            <br>
+            <fieldset>
+                <h3>How would you like to sort the information?</h3>
+                <label for="r-direction">Direction of sort</label>
+                <select name="r-direction" id="r-direction">
+                    <option selected="selected">Up</option>
+                    <option>Down</option>
+                </select>
+                <br>
+                <label for="r-sort1">Sort first by:</label>
+                <select name="r-sort1" id="r-sort1">
+                    <option selected="selected"></option>
+                    <option>Building Name</option>
+                    <option>Room Number</option>
+                    <option>Room Size</option>
+                    <option>Room Type</option>
+                    <option>Furniture Type</option>
+                </select>
+                <label for="r-sort2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort second by:</label>
+                <select name="r-sort2" id="r-sort2">
+                    <option selected="selected"></option>
+                    <option>Building Name</option>
+                    <option>Room Number</option>
+                    <option>Room Size</option>
+                    <option>Room Type</option>
+                    <option>Furniture Type</option>
+                </select>
+                <label for="r-sort3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort third by:</label>
+                <select name="r-sort3" id="r-sort3">
+                    <option selected="selected"></option>
+                    <option>Building Name</option>
+                    <option>Room Number</option>
+                    <option>Room Size</option>
+                    <option>Room Type</option>
+                    <option>Furniture Type</option>
+                </select>
+                <label for="r-sort4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort fourth by:</label>
+                <select name="r-sort4" id="r-sort4">
+                    <option selected="selected"></option>
+                    <option>Building Name</option>
+                    <option>Room Number</option>
+                    <option>Room Size</option>
+                    <option>Room Type</option>
+                    <option>Furniture Type</option>
+                </select>
+                <label for="r-sort5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort fifth by:</label>
+                <select name="r-sort5" id="r-sort5">
+                    <option selected="selected"></option>
+                    <option>Building Name</option>
+                    <option>Room Number</option>
+                    <option>Room Size</option>
+                    <option>Room Type</option>
+                    <option>Furniture Type</option>
+                </select>
+            </fieldset>
+            <button type="submit" class="btn btn-rooms">Submit</button>
+        </div>
+        <div id="tabs-3">
+            <h4>Building codes:</h4>
+            <div id="building_wrapper">
+                <button id="add_new_building">Add</button>
+            </div>
+            <h4>Courses:</h4>
+            <div id="course_wrapper">
+                <button id="add_new_course">Add</button>
+
+            </div>
+            <br>
+            <button type="submit" class="btn btn-schedule">Submit</button>
+            <input type="checkbox" name="Gcal" value="Gcal" id="Gcal">Submit to Google Calendar
+        </div>
+        </form>
+    </div>
+    <div id="result">
+      <h3>Result</h3>
+    </div>
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	    <h4 class="modal-title"></h4>
+	  </div>
+	  <div class="modal-body">
+	    <p></p>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	  </div>
+	</div>
+      </div>
+      </div>
+  </body>
+</html>

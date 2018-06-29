@@ -1,0 +1,18 @@
+Order (p)
+	Add compatibility for new version
+	Test compatibility
+Tests (p)
+	Finish adding/reconfiguring tests from D1 to use InsightController
+	Add tests for D2
+Validity tests for query (l)
+	Check for new constraints on GET, GROUP, APPLY
+Group (l)
+	Go through results of parsing WHERE and GROUP, no added APPLY elements
+	Set up for adding results of apply
+Apply (p)
+	Set up skeleton code for taking grouped data and adding apply elements
+	Ordering from GET is important
+	MAX
+	MIN
+	COUNT
+	AVG

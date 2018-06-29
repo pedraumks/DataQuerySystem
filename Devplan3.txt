@@ -1,0 +1,12 @@
+Keep adding more tests: P
+Parse the dataset: L
+  Install parse5 and figure out how to use it
+  Look at the dataset (manually) to see what we're looking for
+  Decide how to save it
+  Actually parse it
+Do the API query: P
+  Test with hardcoded query to make sure we know what we're doing
+  Figure out how to send GET requests via Javascript/node
+  Do that
+Query the data: L/P
+  Need to check what the dataset looks like first
